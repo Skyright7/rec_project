@@ -85,6 +85,8 @@ startT = time.time()
 
 from keras.metrics import RootMeanSquaredError, MeanAbsoluteError
 
+predictlist = []
+
 for (trainset_dir, testset_dir) in folds_files:
     trainset = pd.read_csv(trainset_dir, sep='\t', names=['user_id', 'movie_id', 'rating', 'timestamp'])
     testset = pd.read_csv(testset_dir, sep='\t', names=['user_id', 'movie_id', 'rating', 'timestamp'])
@@ -131,6 +133,11 @@ for (trainset_dir, testset_dir) in folds_files:
     rmse_list.append(mse[1])
     mae_list.append(mse[2])
 
+    # 预测结果
+    predicts = model.predict([testset['user_id'], testset['movie_id']])
+
+    predictlist.append(predicts)
+
 endT = time.time()
 import numpy as np
 print(rmse_list)
@@ -138,3 +145,6 @@ print(mae_list)
 print('Mean rmse:{}'.format(np.mean(rmse_list)))
 print('Mean mae:{}'.format(np.mean(mae_list)))
 print('Running time:{} s'.format(endT-startT))
+
+u5_predict = pd.DataFrame(predictlist[-1])
+u5_predict.to_csv('emb_predictions.csv', index=False)

@@ -127,6 +127,7 @@ mae_list = []
 import time
 startT = time.time()
 
+predictlist = []
 for (trainset_dir, testset_dir) in folds_files:
     trainset = pd.read_csv(trainset_dir, sep='\t', names=["UserID","MovieID","Rating","Timestamp"])
     testset = pd.read_csv(testset_dir, sep='\t', names=["UserID","MovieID","Rating","Timestamp"])
@@ -167,6 +168,12 @@ for (trainset_dir, testset_dir) in folds_files:
     rmse_list.append(scores[1])
     mae_list.append(scores[2])
 
+
+    # 预测结果
+    predicts = best_model.predict(cross_x_test)
+
+    predictlist.append(predicts)
+
 endT = time.time()
 import numpy as np
 print(rmse_list)
@@ -174,3 +181,6 @@ print(mae_list)
 print('Mean rmse:{}'.format(np.mean(rmse_list)))
 print('Mean mae:{}'.format(np.mean(mae_list)))
 print('Running time:{} s'.format(endT-startT))
+
+u5_predict = pd.DataFrame(predictlist[-1])
+u5_predict.to_csv('MF_predictions.csv', index=False)
