@@ -1,50 +1,70 @@
 # 推荐系统尝试
+## 关于cross validation数据划分：
+老师提供的movielens 100k数据集中已经random有划分好的专门用于5-fold cross validation 的数据
+因此就直接使用就好了。（生成的命令是mku.sh,数据集自带）
 ## SVD
 gridCV后参数选择及按这个参数做cross validation结果：
 ```shell
-0.9361994312022865
 {'n_epochs': 20, 'lr_all': 0.004, 'reg_all': 0.04}
-Evaluating RMSE, MAE of algorithm SVD on 5 split(s).
-
-                  Fold 1  Fold 2  Fold 3  Fold 4  Fold 5  Mean    Std     
-RMSE (testset)    0.9316  0.9353  0.9342  0.9376  0.9431  0.9364  0.0039  
-MAE (testset)     0.7374  0.7388  0.7409  0.7404  0.7462  0.7407  0.0030  
-Fit time          0.32    0.32    0.32    0.33    0.32    0.32    0.00    
-Test time         0.06    0.06    0.06    0.06    0.06    0.06    0.00   
+5-fold:
+RMSE: 0.9540
+MAE:  0.7540
+RMSE: 0.9410
+MAE:  0.7419
+RMSE: 0.9336
+MAE:  0.7369
+RMSE: 0.9314
+MAE:  0.7366
+RMSE: 0.9342
+MAE:  0.7421
+Mean rmse:0.9388394767892786
+Mean mae:0.7423030318093865
+Running time:2.388345718383789 s
 ```
 ## KNN
 gridCV后参数选择及按这个参数做cross validation结果：
 ```shell
-0.9763488871120598
 {'k': 19}
-Evaluating RMSE, MAE of algorithm KNNBasic on 5 split(s).
-
-                  Fold 1  Fold 2  Fold 3  Fold 4  Fold 5  Mean    Std     
-RMSE (testset)    0.9769  0.9831  0.9686  0.9829  0.9732  0.9769  0.0056  
-MAE (testset)     0.7716  0.7759  0.7618  0.7770  0.7652  0.7703  0.0059  
-Fit time          0.07    0.07    0.07    0.07    0.07    0.07    0.00    
-Test time         0.78    0.78    0.78    0.78    0.78    0.78    0.00 
+RMSE: 0.9880
+MAE:  0.7812
+RMSE: 0.9845
+MAE:  0.7728
+RMSE: 0.9760
+MAE:  0.7691
+RMSE: 0.9713
+MAE:  0.7675
+RMSE: 0.9795
+MAE:  0.7756
+Mean rmse:0.9798738334709366
+Mean mae:0.7732423842029357
+Running time:4.765560865402222 s
 ```
 ## Random
 Random 不需要做Grid因为无参可调，只需要做一下交叉验证
 ```shell
-Evaluating RMSE, MAE of algorithm NormalPredictor on 5 split(s).
-
-                  Fold 1  Fold 2  Fold 3  Fold 4  Fold 5  Mean    Std     
-RMSE (testset)    1.5278  1.5156  1.5216  1.5171  1.5187  1.5201  0.0043  
-MAE (testset)     1.2288  1.2145  1.2211  1.2181  1.2223  1.2209  0.0048  
-Fit time          0.03    0.03    0.03    0.03    0.03    0.03    0.00    
-Test time         0.04    0.04    0.04    0.04    0.04    0.04    0.00    
+RMSE: 1.5318
+MAE:  1.2303
+RMSE: 1.5300
+MAE:  1.2280
+RMSE: 1.5194
+MAE:  1.2226
+RMSE: 1.5081
+MAE:  1.2120
+RMSE: 1.5187
+MAE:  1.2158
+Mean rmse:1.521602026777218
+Mean mae:1.2217613877804665
+Running time:0.9276118278503418 s
 ```
 ## MF
-MF 因为使用keras定制，那个evaluate不支持RMSE，就只算了MAE:
+MF,因为gridCV运行稍长，代码现在是暂时将其注释掉的，如果需要运行请将那部分代码取消注释
 ```shell
 bast param: k = 50, batchsize = 1000, epoch = 10.
+RMSE:
+[0.9845523238182068, 0.9721872806549072, 0.9641396403312683, 0.9637541174888611, 0.9709964990615845]
 MAE:
-Fold 1 : 0.9277462959289551
-Fold 2 : 0.9291609525680542
-Fold 3 : 0.9382792115211487
-Fold 4 : 0.921852707862854
-Fold 5 : 0.9330822229385376
-Mean score: 0.9300242781639099
+[0.7726186513900757, 0.7632729411125183, 0.7580324411392212, 0.7586801052093506, 0.7679036259651184]
+Mean rmse:0.9711259722709655
+Mean mae:0.7641015529632569
+Running time:5.521119117736816 s
 ```
