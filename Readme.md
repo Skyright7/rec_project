@@ -5,7 +5,7 @@
 ## SVD
 gridCV后参数选择及按这个参数做cross validation结果：
 ```shell
-{'n_epochs': 20, 'lr_all': 0.004, 'reg_all': 0.04}
+{'n_epochs': 20, 'lr_all': 0.004, 'reg_all': 0.04, 'n_factors': 100}
 5-fold:
 RMSE: 0.9540
 MAE:  0.7540
@@ -69,7 +69,7 @@ Mean mae:0.7641015529632569
 Running time:5.521119117736816 s
 ```
 ## Embedding + MLP
-经典的神经网络在推荐系统上的应用，通过embedding层跟MLP实现推荐(这是没调参数的结果)
+经典的神经网络在推荐系统上的应用，通过embedding层跟MLP实现推荐
 ```shell
 best para:[20, 64] epoch,batchsize
 [1.3913956880569458, 1.3910679817199707, 1.3422080278396606, 1.3794997930526733, 1.342484951019287]
