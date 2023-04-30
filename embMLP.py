@@ -1,9 +1,6 @@
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
-# # 读取电影数据
-# movies_df = pd.read_csv('./dataset/u.item', sep='|', header=None, encoding='latin-1',
-#                         usecols=[0, 1, 2], names=['movie_id', 'title', 'release_date'])
 
 # 读取评分数据
 ratings = pd.read_csv('./dataset/u.data', sep='\t', header=None,
