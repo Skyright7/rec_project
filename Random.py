@@ -2,7 +2,6 @@ from surprise import NormalPredictor
 import os
 from surprise import accuracy, Dataset, Reader
 from surprise.model_selection import PredefinedKFold
-import pickle
 import pandas as pd
 
 def random_5_cv():

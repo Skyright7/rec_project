@@ -1,7 +1,6 @@
 from surprise import KNNBasic
 from surprise.model_selection import train_test_split
 from surprise.model_selection import GridSearchCV
-import pickle
 import os
 from surprise import accuracy, Dataset, Reader
 from surprise.model_selection import PredefinedKFold
@@ -11,10 +10,8 @@ def KNN_param():
     # Load the movielens-100k dataset (download it if needed).
     data = Dataset.load_builtin('ml-100k')
 
-    # 数据集划分
     trainset, testset = train_test_split(data, test_size=0.2,random_state=40)
 
-    # 设置参数选取范围
     param_grid = {'k':[n for n in range(5,20)]}
 
     gs = GridSearchCV(KNNBasic, param_grid, measures=["rmse", "mae"], cv=5)
@@ -75,6 +72,7 @@ def KNN_5_cv(best_k):
     print('Mean mae:{}'.format(np.mean(mae_list)))
     print('Running time:{} s'.format(endT-startT))
 
+    # out put the last fold which is u5.test 's prediction rating out to a csv file for last compare
     u5_predict = pd.DataFrame(predictlist[-1])
     u5_predict.to_csv('KNN_predictions.csv', index=False)
 

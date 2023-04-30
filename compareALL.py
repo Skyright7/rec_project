@@ -4,16 +4,12 @@ import keras
 import numpy as np
 
 def rmse(actual, predicted):
-    # actual = np.array(actual)
-    # predicted = np.array(predicted)
 
-    # 计算差值并求平方
     errors = (actual - predicted) ** 2
 
-    # 求平方和并计算RMSE
     return np.sqrt(np.mean(errors))
 
-
+# this is to calculate rmse by the prediction on u5.test for all model
 if __name__ == '__main__':
     df_knn = pd.read_csv('KNN_predictions.csv',header=None)
     knn_arr = np.asarray(df_knn)

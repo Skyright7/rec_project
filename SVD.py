@@ -4,16 +4,13 @@ import os
 from surprise import accuracy, Dataset, Reader, SVD
 from surprise.model_selection import PredefinedKFold
 import time
-import pickle
 import pandas as pd
 def SVD_param():
     # Load the movielens-100k dataset (download it if needed).
     data = Dataset.load_builtin('ml-100k')
 
-    # 数据集划分
     trainset, testset = train_test_split(data, test_size=0.2,random_state=40)
 
-    # 设置参数选取范围
     param_grid = {'n_epochs':[n for n in range(10,25,5)],
                   "lr_all":[n/1000 for n in range(2,5)],
                   "reg_all":[n/100 for n in range(1,5)],

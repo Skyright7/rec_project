@@ -1,10 +1,34 @@
-# 推荐系统尝试
-## 关于cross validation数据划分：
-老师提供的movielens 100k数据集中已经random有划分好的专门用于5-fold cross validation 的数据
-因此就直接使用就好了。（生成的命令是mku.sh,数据集自带）
+# Recommend system demo
+## Environment
+if you want to run the code by yourself. You need some module for install
+```python
+import surprise
+import keras
+import pandas
+import numpy
+import sklearn
+```
+Just use pip install command to install the module you do not have
+special reminder: if your python version is 3.10. you may face problem in pip install surprise,because the 
+python 3.10 wheel does not available now.
+my python version is 3.9, but for this code, i think python 3.7 above should all be work.
+
+## about Dataset：
+The data set is Movielens 100k. And only use part of it.
+For normal using the whole rating data u.data. But, at 5-fold 
+cross validation part. This data set already have prepared data for 5-fold cross validation.
+This can make all the model I implement have the same source data at the validation part.
+
+## about Running:
+You can just find the python file named as the model name like: KNN.py, embMLP.py
+,you can just using python command to run it for re-run my code.
+
+## about parameter choice:
+All the parameter are choice the best one by GridSearch.
 ## SVD
-gridCV后参数选择及按这个参数做cross validation结果：
+result:
 ```shell
+parameter:
 {'n_epochs': 20, 'lr_all': 0.004, 'reg_all': 0.04, 'n_factors': 100}
 5-fold:
 RMSE: 0.9540
@@ -22,8 +46,9 @@ Mean mae:0.7423030318093865
 Running time:2.388345718383789 s
 ```
 ## KNN
-gridCV后参数选择及按这个参数做cross validation结果：
+result:
 ```shell
+parameter:
 {'k': 19}
 RMSE: 0.9880
 MAE:  0.7812
@@ -40,7 +65,8 @@ Mean mae:0.7732423842029357
 Running time:4.765560865402222 s
 ```
 ## Random
-Random 不需要做Grid因为无参可调，只需要做一下交叉验证
+for the random model are base model, do not have hyperparameter.
+So, just do the 5-fold cross validatiom:
 ```shell
 RMSE: 1.5318
 MAE:  1.2303
@@ -57,7 +83,7 @@ Mean mae:1.2217613877804665
 Running time:0.9276118278503418 s
 ```
 ## MF
-MF,因为gridCV运行稍长，代码现在是暂时将其注释掉的，如果需要运行请将那部分代码取消注释
+Matrix factorization with regularization:
 ```shell
 bast param: k = 50, batchsize = 1000, epoch = 10.
 RMSE:
@@ -69,7 +95,8 @@ Mean mae:0.7641015529632569
 Running time:5.521119117736816 s
 ```
 ## Embedding + MLP
-经典的神经网络在推荐系统上的应用，通过embedding层跟MLP实现推荐
+A famous and traditional neural network.
+Which is embedding + Mlp architecture.
 ```shell
 best para:[20, 64] epoch,batchsize
 [1.3913956880569458, 1.3910679817199707, 1.3422080278396606, 1.3794997930526733, 1.342484951019287]
@@ -79,7 +106,7 @@ Mean mae:1.0982641458511353
 Running time:51.18940997123718 s
 ```
 
-## 所有模型横向比较（保留四位小数）(RMSE)
+## directly compare all these different algorithms (round to four decimal places)(RMSE)
 ```shell
            KNN  Random     SVD      MF  EmbMLP
 KNN     0.0000  1.1793  0.3809  0.4355  0.9971
@@ -88,3 +115,13 @@ SVD     0.3809  1.1807  0.0000  0.3372  1.0055
 MF      0.4355  1.2344  0.3372  0.0000  1.0161
 EmbMLP  0.9971  1.3636  1.0055  1.0161  0.0000
 ```
+The method to do this is just letting all the model train on same data.
+At here is u5.base.
+Then using the trained model to do the prediction on the related test data.
+Here is u5.test.
+Then, for each model we get a "rating" result on test data.
+We store all this rating data in the csv file by pandas model by model.
+(you can see the data like KNN_predictions.csv in root)
+Then, use pandas and numpy to calculate all this rating data, by one model's rating as "actual",
+another as "predict". To calculate the ralated RMSE. Finally, draw this table.
+
