@@ -8,7 +8,7 @@ from surprise.model_selection import GridSearchCV
 data = Dataset.load_builtin('ml-100k')
 
 # 数据集划分
-trainset, testset = train_test_split(data, test_size=0.2)
+trainset, testset = train_test_split(data, test_size=0.2,random_state=40)
 
 # 设置参数选取范围
 param_grid = {'k':[n for n in range(5,20)]}
